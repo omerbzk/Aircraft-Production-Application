@@ -1,0 +1,9 @@
+{% extends "base.html" %}  {# Eğer base template'iniz varsa #}
+
+{% block content %}
+<h1>Hoşgeldiniz</h1>
+<p>{{ request.user.username }}</p>
+<a href="{% url 'part_list' %}">Parçalar</a>
+<a href="{% url 'aircraft_list' %}">Uçaklar</a>
+<a href="{% url 'logout' %}">Çıkış</a>
+{% endblock %}

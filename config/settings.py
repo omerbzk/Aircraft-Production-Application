@@ -51,6 +51,9 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_REDIRECT_URL = '/'  # Login olduktan sonra yönlendirilecek sayfa
+LOGIN_URL = 'accounts/login/'
+
 WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
@@ -77,6 +80,10 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 LANGUAGE_CODE = 'tr-tr'
