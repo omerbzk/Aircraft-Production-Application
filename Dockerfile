@@ -10,5 +10,8 @@ RUN pip install -r requirements.txt
 # Uygulama dosyalarını kopyala
 COPY . /app/
 
-# Django yönetim komutlarını çalıştır
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Statik dosyaları topla
+RUN python manage.py collectstatic --noinput
+
+# Django yönetim komutlarını çalıştır ve veritabanı migrasyonlarını uygula
+CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]

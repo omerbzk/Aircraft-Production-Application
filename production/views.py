@@ -10,13 +10,21 @@ def home(request):
 
 @login_required
 def part_list(request):
-    parts = Part.objects.all()
-    return render(request, 'production/part_list.html', {'parts': parts})
+    try:
+        parts = Part.objects.all()
+        return render(request, 'part_list.html', {'parts': parts})
+    except Exception as e:
+        print(e)
+        return render(request, 'error.html', {'error': str(e)})
 
 @login_required
 def aircraft_list(request):
-    aircraft = Aircraft.objects.all()
-    return render(request, 'production/aircraft_list.html', {'aircraft': aircraft})
+    try:
+        aircrafts = Aircraft.objects.all()
+        return render(request, 'aircraft_list.html', {'aircrafts': aircrafts})
+    except Exception as e:
+        print(e)
+        return render(request, 'error.html', {'error': str(e)})
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
