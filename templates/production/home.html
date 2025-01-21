@@ -3,7 +3,10 @@
 {% block content %}
 <h1>Hoşgeldiniz</h1>
 <p>{{ request.user.username }}</p>
-<a href="{% url 'part_list' %}">Parçalar</a>
-<a href="{% url 'aircraft_list' %}">Uçaklar</a>
-<a href="{% url 'logout' %}">Çıkış</a>
+<a class="nav-link" href="{% url 'part_list' %}">Parçalar</a>
+<a class="nav-link" href="{% url 'aircraft_list' %}">Uçaklar</a>
+<a class="nav-link" href="{% url 'aircrafttype_list' %}">Uçak Tipleri</a>
+<a class="nav-link" href="{% url 'personnel_list' %}">Personel</a>
+<a class="nav-link" href="{% url 'team_list' %}">Takımlar</a>
+<a class="nav-link" href="{% url 'logout' %}">Çıkış</a>
 {% endblock %}

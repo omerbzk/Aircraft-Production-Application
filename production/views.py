@@ -12,19 +12,54 @@ def home(request):
 def part_list(request):
     try:
         parts = Part.objects.all()
-        return render(request, 'part_list.html', {'parts': parts})
+        return render(request, 'production/part_list.html', {'parts': parts})
     except Exception as e:
         print(e)
-        return render(request, 'error.html', {'error': str(e)})
+        return render(request, 'production/error.html', {'error': str(e)})
 
 @login_required
 def aircraft_list(request):
     try:
         aircrafts = Aircraft.objects.all()
-        return render(request, 'aircraft_list.html', {'aircrafts': aircrafts})
+        aircraft_types = AircraftType.objects.all()
+        parts = Part.objects.all()
+        user_team = request.user.personnel.team.name if hasattr(request.user, 'personnel') else None
+        print(user_team)
+        return render(request, 'production/aircraft_list.html', {
+            'aircrafts': aircrafts,
+            'aircraft_types': aircraft_types,
+            'parts': parts,
+            'user_team': user_team
+        })
     except Exception as e:
         print(e)
-        return render(request, 'error.html', {'error': str(e)})
+        return render(request, 'production/error.html', {'error': str(e)})
+@login_required
+def aircrafttype_list(request):
+    try:
+        aircraft_types = AircraftType.objects.all()
+        return render(request, 'production/aircrafttype_list.html', {'aircraft_types': aircraft_types})
+    except Exception as e:
+        print(e)
+        return render(request, 'production/error.html', {'error': str(e)})
+
+@login_required
+def personnel_list(request):
+    try:
+        personnels = Personnel.objects.all()
+        return render(request, 'production/personnel_list.html', {'personnels': personnels})
+    except Exception as e:
+        print(e)
+        return render(request, 'production/error.html', {'error': str(e)})
+
+@login_required
+def team_list(request):
+    try:
+        teams = Team.objects.all()
+        return render(request, 'production/team_list.html', {'teams': teams})
+    except Exception as e:
+        print(e)
+        return render(request, 'production/error.html', {'error': str(e)})
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h2>Personel Listesi</h2>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPersonnelModal">
+            Yeni Personel Ekle
+        </button>
+    </div>
+    <div class="card-body">
+        <table id="personnelTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Ad</th>
+                    <th>Takım</th>
+                    <th>Rol</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for personnel in personnels %}
+                <tr>
+                    <td>{{ personnel.name }}</td>
+                    <td>{{ personnel.team.name }}</td>
+                    <td>{{ personnel.role }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addPersonnelModal" tabindex="-1" aria-labelledby="addPersonnelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPersonnelModalLabel">Yeni Personel Ekle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addPersonnelForm">
+                    <div class="mb-3">
+                        <label for="personnelName" class="form-label">Ad</label>
+                        <input type="text" class="form-control" id="personnelName" name="personnelName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="team" class="form-label">Takım</label>
+                        <select class="form-select" id="team" name="team">
+                            {% for team in teams %}
+                                <option value="{{ team.id }}">{{ team.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Rol</label>
+                        <input type="text" class="form-control" id="role" name="role">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary" id="savePersonnelBtn">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/personnel_list.js' %}"></script>
+{% endblock %}

@@ -1,10 +1,100 @@
-{% extends "base_generic.html" %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-  <h2>Aircraft List</h2>
-  <ul>
-    {% for aircraft in aircrafts %}
-      <li>{{ aircraft.name }}</li>
-    {% endfor %}
-  </ul>
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h2>Uçak Listesi</h2>
+        {% if user_team == 'ASSEMBLY' %}
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAircraftModal">
+            Yeni Uçak Üret
+        </button>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <table id="aircraftTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Uçak Tipi</th>
+                    <th>Kanat</th>
+                    <th>Gövde</th>
+                    <th>Kuyruk</th>
+                    <th>Aviyonik</th>
+                    <th>Monte Eden</th>
+                    <th>Montaj Tarihi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aircraft in aircrafts %}
+                <tr>
+                    <td>{{ aircraft.aircraft_type }}</td>
+                    <td>{{ aircraft.wing }}</td>
+                    <td>{{ aircraft.body }}</td>
+                    <td>{{ aircraft.tail }}</td>
+                    <td>{{ aircraft.avionics }}</td>
+                    <td>{{ aircraft.assembled_by }}</td>
+                    <td>{{ aircraft.assembled_at|date:"d.m.Y H:i" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addAircraftModal" tabindex="-1" aria-labelledby="addAircraftModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAircraftModalLabel">Yeni Uçak Üret</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addAircraftForm">
+                    <div class="mb-3">
+                        <label for="aircraftType" class="form-label">Uçak Tipi</label>
+                        <select class="form-select" id="aircraftType" name="aircraftType">
+                            {% for aircraft_type in aircraft_types %}
+                                <option value="{{ aircraft_type.id }}">{{ aircraft_type.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="wing" class="form-label">Kanat</label>
+                        <select class="form-select" id="wing" name="wing">
+                            <option value="">Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="body" class="form-label">Gövde</label>
+                        <select class="form-select" id="body" name="body">
+                            <option value="">Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tail" class="form-label">Kuyruk</label>
+                        <select class="form-select" id="tail" name="tail">
+                            <option value="">Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="avionics" class="form-label">Aviyonik</label>
+                        <select class="form-select" id="avionics" name="avionics">
+                            <option value="">Seçiniz</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary" id="saveAircraftBtn">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/aircraft_list.js' %}"></script>
 {% endblock %}

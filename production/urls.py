@@ -17,6 +17,9 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('parts/', views.part_list, name='part_list'),
     path('aircraft/', views.aircraft_list, name='aircraft_list'),
+    path('aircraft-types/', views.aircrafttype_list, name='aircrafttype_list'),
+    path('personnel/', views.personnel_list, name='personnel_list'),
+    path('teams/', views.team_list, name='team_list'),
     path('api/', include(router.urls)),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
